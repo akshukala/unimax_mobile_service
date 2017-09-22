@@ -34,8 +34,6 @@ def handle_request(request_data):
         price = (request_data['item_price']).split("$")
         for itr in range(0, len(items)-1):
             temp = float(price[itr])/int(qty[itr])
-            print temp
-            
             Order_Item.objects.create(order=order_obj, item_name=items[itr],
                                       quantity=int(qty[itr]),
                                       selling_price=temp,

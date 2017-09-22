@@ -19,7 +19,7 @@ class SaleOrder(Resource):
 
     def get(self):
         '''
-        This method retrieves the old sale order. Taking the Sale Order Code 
+        This method retrieves the old sale order. Taking the Sale Order Code
         as parameter.
         '''
         app.logger.info(request)
@@ -27,17 +27,17 @@ class SaleOrder(Resource):
         app.logger.info("Received GET Sale Order request for Code %s",
                         data)
         return get_sale_order_handler.handle_request(data)
-# 
-#     def put(self):
-#         '''
-#         This method retrieves the old sale order. Taking the Sale Order Code 
-#         as parameter.
-#         '''
-#         app.logger.info(request)
-#         data = request.get_json(force=True)
-#         app.logger.info("Received PUT Sale Order request for Code %s",
-#                         data)
-#         return put_sale_order_handler.handle_request(data)
+
+    def put(self):
+        '''
+        This method retrieves the old sale order. Taking the Sale Order Code
+        as parameter.
+        '''
+        app.logger.info(request)
+        data = request.get_json(force=True)
+        app.logger.info("Received PUT Sale Order request for Code %s",
+                        data)
+        return put_sale_order_handler.handle_request(data)
 
     def post(self):
         '''

@@ -10,13 +10,25 @@ def create_response(orders):
         order_dict['order_id'] = str(order.id)
         order_dict['created_on'] = order.created_on.strftime("%d/%m/%Y")
         order_dict['shop_name'] = str(order.owner.shop_name)
+        order_dict['cust_name'] = str(order.owner.person_name)
+        order_dict['addr'] = str(order.owner.address)
         order_dict['area'] = str(order.owner.area)
+        order_dict['gst'] = str(order.owner.gst_no)
+        order_dict['pan'] = str(order.owner.pan_no)
+        order_dict['remark'] = str(order.remarks)
+        order_dict['pay_type'] = str(order.payment_type)
         order_item_list = []
+        selling_price_list = []
+        item_price_list = []
         for oi in Order_Item.objects.filter(order=order):
             temp = ""
             temp += str(oi.item_name) + " - " + str(oi.quantity)
+            selling_price_list.append(str(oi.selling_price))
+            item_price_list.append(str(oi.total_price))
             order_item_list.append(temp)
         order_dict['item_list'] = order_item_list
+        order_dict['sp_list'] = selling_price_list
+        order_dict['item_price_list'] = item_price_list
         order_dict['total'] = (order.grand_total)
         response.append(order_dict)
     return response
