@@ -17,17 +17,16 @@ class SaleOrder(Resource):
     This API creates new Sale Order and retrieves the older Sale Order Details.
     '''
 
-#     def get(self):
-#         '''
-#         This method retrieves the old sale order. Taking the Sale Order Code 
-#         as parameter.
-#         '''
-#         app.logger.info(request)
-#         data = request.args
-#         code = data['Code']
-#         app.logger.info("Received GET Sale Order request for Code %s",
-#                         code)
-#         return get_sale_order_handler.handle_request(code)
+    def get(self):
+        '''
+        This method retrieves the old sale order. Taking the Sale Order Code 
+        as parameter.
+        '''
+        app.logger.info(request)
+        data = request.args.to_dict()
+        app.logger.info("Received GET Sale Order request for Code %s",
+                        data)
+        return get_sale_order_handler.handle_request(data)
 # 
 #     def put(self):
 #         '''
