@@ -17,15 +17,15 @@ def create_response(orders):
         order_dict['pan'] = str(order.owner.pan_no)
         order_dict['remark'] = str(order.remarks)
         order_dict['pay_type'] = str(order.payment_type)
-        order_item_list = []
-        selling_price_list = []
-        item_price_list = []
+        order_item_list = ""
+        selling_price_list = ""
+        item_price_list = ""
         for oi in Order_Item.objects.filter(order=order):
             temp = ""
             temp += str(oi.item_name) + " - " + str(oi.quantity)
-            selling_price_list.append(str(oi.selling_price))
-            item_price_list.append(str(oi.total_price))
-            order_item_list.append(temp)
+            selling_price_list += str(oi.selling_price) + "$"
+            item_price_list += str(oi.total_price) + "$"
+            order_item_list += temp + "$"
         order_dict['item_list'] = order_item_list
         order_dict['sp_list'] = selling_price_list
         order_dict['item_price_list'] = item_price_list
