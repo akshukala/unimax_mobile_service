@@ -31,11 +31,11 @@ def handle_request(request_data):
 
         items = str(request_data['itemname']).split('$')
         qty = str(request_data['qty']).split('$')
-        sp = str(request_data['sp']).split('$')
         price = str(request_data['item_price']).split("$")
         for itr in range(0, len(items)-1):
             Order_Item.objects.create(order=order_obj, item_name=items[itr],
-                                      quantity=qty[itr], selling_price=sp[itr],
+                                      quantity=qty[itr],
+                                      selling_price=int(int(price[itr]/int(qty[itr]))),
                                       total_price=float(price[itr]))
         return {
                 'responseCode': 200,
