@@ -23,15 +23,27 @@ def create_response(orders):
 
 
 def handle_request(response_data):
-    print response_data
     if int(response_data['type']) == 1:
         '''Get todays orders'''
         today = datetime.now().date()
-        orders = CustOrder.objects.filter(created_on__contains=today)
-        return create_response(orders)
+        orders = CustOrder.objects.filter(created_on__contains=today)[::-1]
+        return{
+                'responseCode': 200,
+                'response_data': create_response(orders)
+            }
     elif int(response_data['type'] == 2):
         '''Get orders by date range'''
-        return "Success"
+        start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
+        end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
+        orders = CustOrder.objects.filter(created_on__range=[start_date, end_date])
+        return{
+                'responseCode': 200,
+                'response_data': create_response(orders)
+            }
     else:
         '''get all orders'''
-        return "Success"
+        orders = CustOrder.objects.all()[::-1]
+        return{
+                'responseCode': 200,
+                'response_data': create_response(orders)
+            }
