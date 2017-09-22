@@ -12,6 +12,7 @@ from mobileservice.session.interfaces import DBInterface
 from flask.ext.cors import CORS
 
 from mobileservice.service_apis.ping import Ping
+from mobileservice.service_apis.sale_order import SaleOrder
 
 close_old_connections()
 init_pool()
@@ -28,10 +29,11 @@ api = restful.Api(app)
 setup_config_logger(app)
 
 app.logger.info("Setting up Resources")
-api.add_resource(Ping,'/mobileservice/ping/')
+api.add_resource(Ping, '/mobileservice/ping/')
+api.add_resource(SaleOrder, '/mobileservice/sale_order/')
 
 app.logger.info("Resource setup done")
 
 if __name__ == '__main__':
-    
-    app.run(host="0.0.0.0", port=7291,threaded=True)
+
+    app.run(host="0.0.0.0", port=7291, threaded=True)
