@@ -11,6 +11,7 @@ def create_response(orders):
         order_dict['created_on'] = order.created_on.strftime("%d/%m/%Y")
         order_dict['shop_name'] = str(order.owner.shop_name)
         order_dict['cust_name'] = str(order.owner.person_name)
+        order_dict['contact'] = str(order.owner.contact_no)
         order_dict['addr'] = str(order.owner.address)
         order_dict['area'] = str(order.owner.area)
         order_dict['gst'] = str(order.owner.gst_no)
