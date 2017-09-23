@@ -6,8 +6,8 @@ from mobileservice.utils.auth import get_user
 
 def handle_request(request_data):
     try:
-        cust_obj = Customer.objects.create(shop_name=str(request_data['cust_name']),
-                                           person_name=str(request_data['shop_name']),
+        cust_obj = Customer.objects.create(shop_name=str(request_data['shop_name']),
+                                           person_name=str(request_data['cust_name']),
                                            contact_no=str(request_data['contact']),
                                            area=str(request_data['area']),
                                            created_by=get_user(),
