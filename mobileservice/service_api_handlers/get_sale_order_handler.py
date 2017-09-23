@@ -18,19 +18,26 @@ def create_response(orders):
         order_dict['pan'] = str(order.owner.pan_no)
         order_dict['remark'] = str(order.remarks)
         order_dict['pay_type'] = str(order.payment_type)
-        order_item_list = ""
-        qty_list = ""
-        selling_price_list = ""
-        item_price_list = ""
+        order_item_list = []
+        qty_list = []
         for oi in Order_Item.objects.filter(order=order):
-            order_item_list += str(oi.item_name) + ":"
-            qty_list += str(oi.quantity) + ":"
-            selling_price_list += str(oi.selling_price) + ":"
-            item_price_list += str(oi.total_price) + ":"
-        order_dict['item_list'] = order_item_list
-        order_dict['qty'] = qty_list
-        order_dict['sp_list'] = selling_price_list
-        order_dict['item_price_list'] = item_price_list
+            order_item_list.append(str(oi.item_name))
+            qty_list.append(oi.quantity)
+        if "Pipe 1/2 inch" in order_item_list:
+            index = order_item_list.index("Pipe 1/2 inch")
+            order_dict['Pipe 1/2 inch'] = qty_list[index]
+        else:
+            order_dict['Pipe 1/2 inch'] = 0
+        if "Pipe 3/4 inch" in order_item_list:
+            index = order_item_list.index("Pipe 3/4 inch")
+            order_dict['Pipe 3/4 inch'] = qty_list[index]
+        else:
+            order_dict['Pipe 3/4 inch'] = 0
+        if "Pipe 1 inch" in order_item_list:
+            index = order_item_list.index("Pipe 1 inch")
+            order_dict['Pipe 1 inch'] = qty_list[index]
+        else:
+            order_dict['Pipe 1 inch'] = 0
         order_dict['total'] = (order.grand_total)
         response.append(order_dict)
     return response
