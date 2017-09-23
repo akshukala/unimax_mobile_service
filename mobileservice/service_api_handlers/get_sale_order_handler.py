@@ -63,7 +63,7 @@ def handle_request(response_data):
             }
     else:
         '''get all orders'''
-        orders = CustOrder.objects.all()[::-1]
+        orders = CustOrder.objects.all().exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
