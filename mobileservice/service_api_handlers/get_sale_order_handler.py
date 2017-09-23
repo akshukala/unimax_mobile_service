@@ -22,8 +22,8 @@ def create_response(orders):
         selling_price_list = ""
         item_price_list = ""
         for oi in Order_Item.objects.filter(order=order):
-            order_item_list += str(oi.item_name)
-            qty_list += str(oi.quantity)
+            order_item_list += str(oi.item_name) + ":"
+            qty_list += str(oi.quantity) + ":"
             selling_price_list += str(oi.selling_price) + ":"
             item_price_list += str(oi.total_price) + ":"
         order_dict['item_list'] = order_item_list
