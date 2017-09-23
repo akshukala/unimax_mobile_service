@@ -8,8 +8,7 @@ from mobileservice.utils.auth import get_user
 def handle_request(response_data):
     print response_data
     try:
-        order_obj = CustOrder.objects.get(id=int(response_data['order_id'])
-                                          ).select_related('owner')
+        order_obj = CustOrder.objects.get(id=int(response_data['order_id']))
         cust_obj = order_obj.owner
         cust_obj.shop_name = str(response_data['shop_name'])
         cust_obj.person_name = str(response_data['cust_name'])
@@ -37,15 +36,19 @@ def handle_request(response_data):
         qty = (response_data['qty']).split('$')
         price = (response_data['item_price']).split("$")
         for itr in range(0, len(items)-1):
-            temp = float(price[itr])/int(qty[itr])
-            Order_Item.objects.create(order=order, item_name=items[itr],
+            print qty[itr]
+            if int(qty[itr])==0:
+                continue
+            else:
+                temp = float(price[itr])/int(qty[itr])
+                Order_Item.objects.create(order=order, item_name=items[itr],
                                       quantity=int(qty[itr]),
                                       selling_price=temp,
                                       total_price=float(price[itr]))
         order_obj.status = "CANCELLED"
         order_obj.save()
         return{
-                'responseCode': 503,
+                'responseCode': 200,
                 'Message': "Order Successfully Edited"
             }
     except ObjectDoesNotExist:
