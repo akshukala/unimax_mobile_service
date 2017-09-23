@@ -23,21 +23,21 @@ def create_response(orders):
         for oi in Order_Item.objects.filter(order=order):
             order_item_list.append(str(oi.item_name))
             qty_list.append(oi.quantity)
-        if "Pipe 1/2 inch" in order_item_list:
-            index = order_item_list.index("Pipe 1/2 inch")
-            order_dict['Pipe 1/2 inch'] = qty_list[index]
+        if "1/2 inch" in order_item_list:
+            index = order_item_list.index("1/2 inch")
+            order_dict['1/2 inch'] = qty_list[index]
         else:
-            order_dict['Pipe 1/2 inch'] = 0
-        if "Pipe 3/4 inch" in order_item_list:
-            index = order_item_list.index("Pipe 3/4 inch")
-            order_dict['Pipe 3/4 inch'] = qty_list[index]
+            order_dict['1/2 inch'] = 0
+        if "3/4 inch" in order_item_list:
+            index = order_item_list.index("3/4 inch")
+            order_dict['3/4 inch'] = qty_list[index]
         else:
-            order_dict['Pipe 3/4 inch'] = 0
-        if "Pipe 1 inch" in order_item_list:
-            index = order_item_list.index("Pipe 1 inch")
-            order_dict['Pipe 1 inch'] = qty_list[index]
+            order_dict['3/4 inch'] = 0
+        if "1 inch" in order_item_list:
+            index = order_item_list.index("1 inch")
+            order_dict['1 inch'] = qty_list[index]
         else:
-            order_dict['Pipe 1 inch'] = 0
+            order_dict['1 inch'] = 0
         order_dict['total'] = (order.grand_total)
         response.append(order_dict)
     return response
