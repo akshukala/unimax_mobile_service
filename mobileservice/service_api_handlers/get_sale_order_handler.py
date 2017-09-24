@@ -46,8 +46,9 @@ def create_response(orders):
 def handle_request(response_data):
     if int(response_data['type']) == 1:
         '''Get todays orders'''
-        today = datetime.now().date()
-        orders = CustOrder.objects.filter(created_on__contains=today).exclude(status='CANCELLED')[::-1]
+        #today = datetime.now().date()
+        orders = CustOrder.objects.filter(is_active=True
+                                          ).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
@@ -56,14 +57,16 @@ def handle_request(response_data):
         '''Get orders by date range'''
         start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
-        orders = CustOrder.objects.filter(created_on__range=[start_date, end_date]).exclude(status='CANCELLED')[::-1]
+        orders = CustOrder.objects.filter(created_on__range=[start_date, end_date],
+                                          is_active=True).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
             }
     else:
         '''get all orders'''
-        orders = CustOrder.objects.all().exclude(status='CANCELLED')[::-1]
+        orders = CustOrder.objects.filter(is_active=True
+                                          ).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)

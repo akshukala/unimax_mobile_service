@@ -13,6 +13,7 @@ from flask.ext.cors import CORS
 
 from mobileservice.service_apis.ping import Ping
 from mobileservice.service_apis.sale_order import SaleOrder
+from mobileservice.service_apis.users import UserDetail
 
 close_old_connections()
 init_pool()
@@ -31,6 +32,7 @@ setup_config_logger(app)
 app.logger.info("Setting up Resources")
 api.add_resource(Ping, '/mobileservice/ping/')
 api.add_resource(SaleOrder, '/mobileservice/sale_order/')
+api.add_resource(UserDetail, '/mobileservice/user_detail/')
 
 app.logger.info("Resource setup done")
 
