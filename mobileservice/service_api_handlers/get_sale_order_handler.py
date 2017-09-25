@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from uni_db.mob_app.models import CustOrder, Order_Item
+from uni_db.mob_app.models import CustOrder, Order_Item, User_Details
+from mobileservice.utils.auth import get_user
 
 
 def create_response(orders):
@@ -44,11 +45,17 @@ def create_response(orders):
 
 
 def handle_request(response_data):
+    user_obj = User_Details.objects.get(user=get_user())
     if int(response_data['type']) == 1:
         '''Get todays orders'''
         #today = datetime.now().date()
-        orders = CustOrder.objects.filter(is_active=True
-                                          ).exclude(status='CANCELLED')[::-1]
+        if user_obj.is_admin:
+            orders = CustOrder.objects.filter(is_active=True
+                                              ).exclude(status='CANCELLED')[::-1]
+        else:
+            orders = CustOrder.objects.filter(is_active=True,
+                                              created_by=str(get_user().username)
+                                              ).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
@@ -57,17 +64,28 @@ def handle_request(response_data):
         '''Get orders by date range'''
         start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
-        orders = CustOrder.objects.filter(created_on__gte=start_date,
-                                          created_on__lte=end_date,
-                                          is_active=True).exclude(status='CANCELLED')[::-1]
+        if user_obj.is_admin:
+            orders = CustOrder.objects.filter(created_on__gte=start_date,
+                                              created_on__lte=end_date,
+                                              is_active=True).exclude(status='CANCELLED')[::-1]
+        else:
+            orders = CustOrder.objects.filter(created_on__gte=start_date,
+                                              created_on__lte=end_date,
+                                              created_by=str(get_user().username),
+                                              is_active=True).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
             }
     else:
         '''get all orders'''
-        orders = CustOrder.objects.filter(is_active=True
-                                          ).exclude(status='CANCELLED')[::-1]
+        if user_obj.is_admin:
+            orders = CustOrder.objects.filter(is_active=True
+                                              ).exclude(status='CANCELLED')[::-1]
+        else:
+            orders = CustOrder.objects.filter(is_active=True,
+                                              created_by=str(get_user().username)
+                                              ).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
                 'response_data': create_response(orders)
