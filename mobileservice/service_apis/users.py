@@ -55,39 +55,47 @@ class UserDetail(Resource):
         try:
             app.logger.info(request)
             request_data = request.get_json(force=True)
-            status = True if int(request_data['status']) == 1 else False
-            user_detail_obj = User_Details.objects.get(id=int(request_data['user_id']))
-            user = user_detail_obj.user
-            user_detail_obj.executive_name = str(request_data['f_name']) + " "\
-            + str(request_data['l_name'])
-            user_detail_obj.password = str(request_data['pwd'])
-            user_detail_obj.is_admin = status
-            user_detail_obj.save()
-            user.set_password(str(request_data['pwd']))
-            user.username = str(request_data['u_name'])
-            user.first_name = str(request_data['f_name'])
-            user.last_name = str(request_data['l_name'])
-            user.save()
-            return {
-                'responseCode': 200,
-                'Message': "User Updated Successfully",
-            }
+            if int(request_data['type']) == 1:
+                status = True if int(request_data['status']) == 1 else False
+                user_detail_obj = User_Details.objects.get(id=int(request_data['user_id']))
+                user = user_detail_obj.user
+                user_detail_obj.executive_name = str(request_data['f_name']) + " "\
+                + str(request_data['l_name'])
+                user_detail_obj.password = str(request_data['pwd'])
+                user_detail_obj.is_admin = status
+                user_detail_obj.save()
+                user.set_password(str(request_data['pwd']))
+                user.username = str(request_data['u_name'])
+                user.first_name = str(request_data['f_name'])
+                user.last_name = str(request_data['l_name'])
+                user.save()
+                return {
+                    'responseCode': 200,
+                    'Message': "User Updated Successfully",
+                }
+            else:
+                User_Details.objects.filter(id=int(request_data['user_id'])
+                                            ).update(is_active=False)
+                return {
+                    'responseCode': 200,
+                    'Message': "User Deleted Successfully",
+                }
         except Exception as e:
             app.logger.debug(str(e))
             return {'responseCode': 503,
                     'Message': "User not Updated"}
 
-    def delete(self):
-        try:
-            app.logger.info(request)
-            request_data = request.get_json(force=True)
-            User_Details.objects.filter(id=int(request_data['user_id'])
-                                        ).update(is_active=False)
-            return {
-                'responseCode': 200,
-                'Message': "User Deleted Successfully",
-            }
-        except Exception as e:
-            app.logger.debug(str(e))
-            return {'responseCode': 503,
-                    'Message': "User not Deleted"}
+#     def delete(self):
+#         try:
+#             app.logger.info(request)
+#             request_data = request.get_json(force=True)
+#             User_Details.objects.filter(id=int(request_data['user_id'])
+#                                         ).update(is_active=False)
+#             return {
+#                 'responseCode': 200,
+#                 'Message': "User Deleted Successfully",
+#             }
+#         except Exception as e:
+#             app.logger.debug(str(e))
+#             return {'responseCode': 503,
+#                     'Message': "User not Deleted"}

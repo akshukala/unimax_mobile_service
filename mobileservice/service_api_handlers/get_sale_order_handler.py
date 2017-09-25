@@ -57,7 +57,8 @@ def handle_request(response_data):
         '''Get orders by date range'''
         start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
-        orders = CustOrder.objects.filter(created_on__range=[start_date, end_date],
+        orders = CustOrder.objects.filter(created_on__gte=start_date,
+                                          created_on__lte=end_date,
                                           is_active=True).exclude(status='CANCELLED')[::-1]
         return{
                 'responseCode': 200,
