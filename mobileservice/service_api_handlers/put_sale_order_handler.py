@@ -30,8 +30,8 @@ def handle_request(response_data):
                                              modified_by=str(get_user().username),
                                              grand_total=float(response_data['total']))
             if response_data['remark']:
-                order_obj.remarks = str(response_data['remark'])
-            order_obj.save()
+                order.remarks = str(response_data['remark'])
+            order.save()
     
             items = str(response_data['itemname']).split('$')
             qty = (response_data['qty']).split('$')
