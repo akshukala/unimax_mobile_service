@@ -21,7 +21,7 @@ class UserDetail(Resource):
                 'username': str(user.user.username),
                 'password': str(user.password),
                 'is_admin': user.is_admin
-                } for user in User_Details.objects.filter(is_active=True)]
+                } for user in User_Details.objects.filter(is_active=True)[::-1]]
 
     def post(self):
         try:
@@ -31,10 +31,13 @@ class UserDetail(Resource):
             user_obj.first_name = str(request_data['f_name']).title()
             user_obj.last_name = str(request_data['l_name']).title()
             user_obj.save()
+            status = True if int(request_data['status'])==1 else False
+
             User_Details.objects.create(executive_name=str(request_data['f_name']
                                                            ).title() + " " + str(request_data['l_name']).title(),
                                         password=str(request_data['pwd']),
-                                        user=user_obj
+                                        user=user_obj,
+                                        is_admin = status
                                         )
             return {
                 'responseCode': 200,

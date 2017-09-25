@@ -6,6 +6,8 @@ from mobileservice.utils.auth import get_user
 
 def handle_request(request_data):
     try:
+        import pdb
+        pdb.set_trace()
         cust_obj = Customer.objects.create(shop_name=str(request_data['shop_name']).title(),
                                            person_name=str(request_data['cust_name']).title(),
                                            contact_no=str(request_data['contact']),
