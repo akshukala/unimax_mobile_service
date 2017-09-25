@@ -53,7 +53,7 @@ def handle_request(response_data):
                 'responseCode': 200,
                 'response_data': create_response(orders)
             }
-    elif int(response_data['type'] == 2):
+    elif int(response_data['type']) == 2:
         '''Get orders by date range'''
         start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
