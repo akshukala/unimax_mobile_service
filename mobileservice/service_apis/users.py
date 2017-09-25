@@ -49,7 +49,7 @@ class UserDetail(Resource):
         except Exception as e:
             app.logger.debug(str(e))
             return {'responseCode': 503,
-                    'Message': "User not Created"}
+                    'Message': "User not Created as it already exists"}
 
     def put(self):
         try:

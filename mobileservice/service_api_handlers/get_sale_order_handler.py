@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from uni_db.mob_app.models import CustOrder, Order_Item, User_Details
 from mobileservice.utils.auth import get_user
@@ -64,13 +64,14 @@ def handle_request(response_data):
         '''Get orders by date range'''
         start_date = datetime.strptime(str(response_data['start_date'])+' 0:0:0','%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(str(response_data['end_date'])+' 0:0:0', '%Y-%m-%d %H:%M:%S')
+        new_end = end_date + timedelta(days=1)
         if user_obj.is_admin:
             orders = CustOrder.objects.filter(created_on__gte=start_date,
-                                              created_on__lte=end_date,
+                                              created_on__lte=new_end,
                                               is_active=True).exclude(status='CANCELLED')[::-1]
         else:
             orders = CustOrder.objects.filter(created_on__gte=start_date,
-                                              created_on__lte=end_date,
+                                              created_on__lte=new_end,
                                               created_by=str(get_user().username),
                                               is_active=True).exclude(status='CANCELLED')[::-1]
         return{
