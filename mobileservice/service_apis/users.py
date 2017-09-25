@@ -55,11 +55,13 @@ class UserDetail(Resource):
         try:
             app.logger.info(request)
             request_data = request.get_json(force=True)
+            status = True if int(request_data['status']) == 1 else False
             user_detail_obj = User_Details.objects.get(id=int(request_data['user_id']))
             user = user_detail_obj.user
             user_detail_obj.executive_name = str(request_data['f_name']) + " "\
             + str(request_data['l_name'])
             user_detail_obj.password = str(request_data['pwd'])
+            user_detail_obj.is_admin = status
             user_detail_obj.save()
             user.set_password(str(request_data['pwd']))
             user.username = str(request_data['u_name'])
