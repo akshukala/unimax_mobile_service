@@ -42,10 +42,9 @@ def create_response(orders):
         else:
             order_dict['1 inch'] = 0
         order_dict['total'] = (order.grand_total)
-        image_str = ''
-        for img in Shop_Images.objects.filter(customer=order.owner):
-            image_str += str(img.img_url) + "!"
-        order_dict['img_urls'] = image_str
+        img_obj = Shop_Images.objects.filter(customer=order.owner)
+        for img in range(0, len(img_obj)):
+            order_dict['img_url'+(img+1)] = str(img_obj[img].img_url)
         response.append(order_dict)
     return response
 
