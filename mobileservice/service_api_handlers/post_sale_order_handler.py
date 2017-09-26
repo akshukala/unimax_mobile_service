@@ -6,8 +6,6 @@ from mobileservice.utils.auth import get_user
 
 def handle_request(request_data):
     try:
-        import pdb
-        pdb.set_trace()
         cust_obj = Customer.objects.create(shop_name=str(request_data['shop_name']).title(),
                                            person_name=str(request_data['cust_name']).title(),
                                            contact_no=str(request_data['contact']),
@@ -44,7 +42,8 @@ def handle_request(request_data):
         return {
                 'responseCode': 200,
                 'Message': "Order saved",
-                'order_id': str(order_obj.id)
+                'order_id': str(order_obj.id),
+                'customer_id': str(cust_obj.id)
             }
     except Exception as e:
             app.logger.debug(str(e))
