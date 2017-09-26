@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
-from uni_db.mob_app.models import CustOrder, Order_Item, User_Details
+from uni_db.mob_app.models import (CustOrder, Order_Item,
+                                   User_Details, Shop_Images)
 from mobileservice.utils.auth import get_user
 
 
@@ -41,6 +42,10 @@ def create_response(orders):
         else:
             order_dict['1 inch'] = 0
         order_dict['total'] = (order.grand_total)
+        image_str = ''
+        for img in Shop_Images.objects.filter(customer=order.owner):
+            image_str += str(img) + "$"
+        order_dict['img_urls'] = image_str
         response.append(order_dict)
     return response
 
