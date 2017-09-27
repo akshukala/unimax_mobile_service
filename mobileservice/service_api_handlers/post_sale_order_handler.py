@@ -62,7 +62,7 @@ def handle_request(request_data, files):
                                        customer=cust_obj)
 
         title = "Order Created By " + str(order_obj.created_by)
-        desc = "Order of amount" + str(request_data['total']) + " has been created."
+        desc = "Order of amount Rs " + str(request_data['total']) + " has been created."
         token_list = [str(obj.token_id) for obj in FirebaseToken.objects.all()]
         API_ACCESS_KEY = 'AIzaSyCoFp3hp-ypjISBbn3ms96dCq4aYFkuWTY'
         registrationIds = token_list
