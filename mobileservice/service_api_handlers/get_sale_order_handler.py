@@ -64,7 +64,6 @@ def create_response(orders):
         #     image_str += str(img.img_url) + ";"
         # order_dict['img_urls'] = image_str
         response.append(order_dict)
-    print response
     return response
 
 
