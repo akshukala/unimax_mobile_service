@@ -16,6 +16,7 @@ from mobileservice.service_apis.sale_order import SaleOrder
 from mobileservice.service_apis.users import UserDetail
 from mobileservice.service_apis.images import Cust_Image
 from mobileservice.service_apis.firebase_token import Token
+from mobileservice.service_apis.notification import Send_Notification
 
 close_old_connections()
 init_pool()
@@ -37,6 +38,7 @@ api.add_resource(SaleOrder, '/mobileservice/sale_order/')
 api.add_resource(UserDetail, '/mobileservice/user_detail/')
 api.add_resource(Cust_Image, '/mobileservice/images/')
 api.add_resource(Token, '/mobileservice/fcm_token/')
+api.add_resource(Send_Notification, '/mobileservice/notification/')
 
 app.logger.info("Resource setup done")
 
