@@ -44,7 +44,9 @@ class SaleOrder(Resource):
         This method creates new Sale Order.
         '''
         app.logger.info(request)
-        request_details = request.get_json(force=True)
+        #request_details = request.get_json(force=True)
+        files = request.files['image']
+        request_details = request.values.to_dict()
         app.logger.info("Received POST Sale Order request for Code %s",
                         request_details)
-        return post_sale_order_handler.handle_request(request_details)
+        return post_sale_order_handler.handle_request(request_details, files)
