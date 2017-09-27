@@ -16,7 +16,12 @@ class Cust_Image(Resource):
                           api_key="854195629923224",
                           api_secret="swPL_-5N9bzrMZWZofMi95b5wCM")
 
-        response = cloudinary.uploader.upload(file)
+        response = cloudinary.uploader.upload(file, crop='limit',
+                                              width=512,
+                                              height=512,
+                                              eager=[{'width': 100,
+                                                      'height': 150,
+                                                      'crop': 'fill'}])
         Shop_Images.objects.create(img_url=str(response['secure_url']),
                                    customer=Customer.objects.get(id=int(data['customer_id'])))
         return{
