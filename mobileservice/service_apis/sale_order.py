@@ -40,8 +40,6 @@ class SaleOrder(Resource):
         return put_sale_order_handler.handle_request(data)
 
     def post(self):
-        import pdb
-        pdb.set_trace()
         '''
         This method creates new Sale Order.
         '''
