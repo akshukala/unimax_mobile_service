@@ -61,8 +61,8 @@ def handle_request(request_data, files):
             Shop_Images.objects.create(img_url=str(response['secure_url']),
                                        customer=cust_obj)
 
-        title = "hello"
-        desc = "Welcome to Unimax"
+        title = "Order Created By " + str(order_obj.created_by)
+        desc = "Order of amount" + str(request_data['total']) + " has been created."
         token_list = [str(obj.token_id) for obj in FirebaseToken.objects.all()]
         API_ACCESS_KEY = 'AIzaSyCoFp3hp-ypjISBbn3ms96dCq4aYFkuWTY'
         registrationIds = token_list
@@ -70,7 +70,7 @@ def handle_request(request_data, files):
         fields = {
             'registration_ids': registrationIds,
             "data": {
-              "name": "Unimax",
+              "name": "Unimax Enterprises",
               "body": desc,
               "title": title
             }
