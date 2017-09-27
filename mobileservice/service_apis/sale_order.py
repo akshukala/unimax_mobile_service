@@ -40,12 +40,15 @@ class SaleOrder(Resource):
         return put_sale_order_handler.handle_request(data)
 
     def post(self):
+        import pdb
+        pdb.set_trace()
         '''
         This method creates new Sale Order.
         '''
         app.logger.info(request)
         #request_details = request.get_json(force=True)
-        files = request.files['image']
+        files = request.files.to_dict()
+        print files
         request_details = request.values.to_dict()
         app.logger.info("Received POST Sale Order request for Code %s",
                         request_details)

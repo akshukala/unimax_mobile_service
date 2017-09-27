@@ -7,6 +7,7 @@ import cloudinary.uploader
 
 def handle_request(request_data, files):
     try:
+       
         print request_data
         print files
 #         cust_obj = Customer.objects.create(shop_name=str(request_data['shop_name']).title(),

@@ -11,7 +11,7 @@ class Send_Notification(Resource):
         title = "hello"
         desc = "Welcome to Unimax"
         token_list = [str(obj.token_id) for obj in FirebaseToken.objects.all()]
-        API_ACCESS_KEY = 'AIzaSyADp_hf16J9owNCV38tZAt8EU_L_kHlBgE'
+        API_ACCESS_KEY = 'AIzaSyCoFp3hp-ypjISBbn3ms96dCq4aYFkuWTY'
         registrationIds = token_list
         url = 'https://android.googleapis.com/gcm/send'
         fields = {
@@ -30,5 +30,5 @@ class Send_Notification(Resource):
         print(result)
         return{
                     'responseCode': 200,
-                    'response': result
+                    'response': "sss"
                 }
