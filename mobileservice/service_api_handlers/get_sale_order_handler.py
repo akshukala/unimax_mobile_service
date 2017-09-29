@@ -20,7 +20,7 @@ def create_response(orders):
         order_dict['pan'] = str(order.owner.pan_no)
         order_dict['remark'] = str(order.remarks)
         order_dict['pay_type'] = str(order.payment_type)
-        order_dict['created_by'] = str(order.created_by)
+        order_dict['created_by'] = str(order.owner.created_by.first_name) + " " + str(order.owner.created_by.last_name)
         order_item_list = []
         qty_list = []
         for oi in Order_Item.objects.filter(order=order):
